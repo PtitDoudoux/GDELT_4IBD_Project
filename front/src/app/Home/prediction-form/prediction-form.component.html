@@ -1,0 +1,51 @@
+<div class="container">
+<div fxLayout="column" class="center_div" *ngIf="datas">
+	
+
+<!-- <form [formGroup] = "form" (ngSubmit) = "onSubmit(form.value)"> -->
+  <table class="example-full-width" cellspacing="10px"><tr>
+  	<!--<td><mat-form-field class="example-full-width">
+      <input matInput placeholder="#Tag" [matAutocomplete]="auto1" [formControl]="dataCtrlTags" class="form-control" id="tag" [(ngModel)]="model.tag" name="tag" spellcheck="false" required>
+      <mat-autocomplete #auto1="matAutocomplete">
+      <mat-option *ngFor="let item of filteredDatasTags | async" [value]="item.name">
+        <span>{{ item.name }}</span>
+      </mat-option>
+    </mat-autocomplete>
+    </mat-form-field></td>-->
+    <td><mat-form-field class="example-full-width">
+      <input matInput placeholder="Actor 1" [matAutocomplete]="auto3" [formControl]="dataCtrlActors" class="form-control" id="actor" [(ngModel)]="model.actor1" name="actor1" required>
+      <mat-autocomplete #auto3="matAutocomplete">
+      <mat-option *ngFor="let item of filteredDatasActors | async" [value]="item.name">
+        <span>{{ item.name }}</span>
+      </mat-option>
+    </mat-autocomplete>
+    </mat-form-field></td>
+     <td><mat-form-field class="example-full-width">
+      <input matInput placeholder="Actor 2" [matAutocomplete]="auto4" [formControl]="dataCtrlActors2" class="form-control" id="actor2" [(ngModel)]="model.actor2" required>
+      <mat-autocomplete #auto4="matAutocomplete">
+      <mat-option *ngFor="let item of filteredDatasActors2 | async" [value]="item.name">
+        <span>{{ item.name }}</span>
+      </mat-option>
+    </mat-autocomplete>
+    </mat-form-field></td>
+  </tr></table>
+
+        <mat-form-field id="date">
+  <input matInput disabled [matDatepicker]="picker" [min]="minDate" placeholder="Choose a date" (dateInput)="saveDate($event)" (dateChange)="saveDate($event)" class="form-control" id="date" required [(ngModel)]="model.date" name="date" #date="ngModel">
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-datepicker disabled="false" #picker [startAt]="startDate"></mat-datepicker>
+</mat-form-field>
+<br><br>
+ <div fxLayoutGap="30%" style="text-align: center;">
+   <button mat-raised-button mat-icon-button color="accent" (click)="reset_search();">
+            <mat-icon>autorenew</mat-icon>
+          </button>
+          <button mat-raised-button mat-icon-button color="primary" (click)="search()">
+            <mat-icon>search</mat-icon>
+          </button>
+        </div>
+     	   <!-- </form> -->
+      </div>
+
+ 
+</div>
