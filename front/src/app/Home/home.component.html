@@ -7,7 +7,7 @@
     <img id="smoke2" width="50" src="../../assets/images/smoke.svg">
 
 </div>
-<div id="form">
+<div id="form" *ngIf="currentPossibilities">
 <app-prediction-form [datas]=currentPossibilities (messageEvent)="submitted($event)"></app-prediction-form>
 </div>
 </div>

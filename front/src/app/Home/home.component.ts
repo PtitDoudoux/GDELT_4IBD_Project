@@ -36,77 +36,12 @@ export class HomeComponent implements OnInit{
   }
 
   getAutocomplete(){
-    this.currentPossibilities = [];
-    
-
-    this.currentPossibilities = [{
-      tags: [{
-        name: '#BalanceTonPorc',
-        type: 'tag'
-      },
-      {
-        name: '#BlackFace',
-        type: 'tag'
-      },
-      {
-        name: '#Trump',
-        type: 'tag'
-      },
-      {
-        name: '#GreveSncf',
-        type: 'tag'
-      }],  
-      names: [{
-        name: 'Arkansas',
-        type: 'name'
-      },
-      {
-        name: 'California',
-        type: 'name'
-      },
-      {
-        name: 'Florida',
-        type: 'name'
-      },
-      {
-        name: 'Texas',
-        type: 'name'
-      }],  
-      actors: [{
-        name: 'Macron',
-        type: 'actor'
-      },
-      {
-        name: 'France',
-        type: 'actor'
-      },
-      {
-        name: 'Plane',
-        type: 'actor'
-      },
-      {
-        name: 'Hacker',
-        type: 'actor'
-      }]
-    }];
+ this._service.getActors().then(res => {
+      this.currentPossibilities = res;
+  })
   }
-  
 
-  
-    // this._service.getPrediction().subscribe((item) => {
 
-    //   if(item!=null){
-    //     // this.found = true;
-    //   }
-    // });
-
-     //   this.dataService.getPrediction().subscribe( (res) => {
-  //     this.possibilities = res[0];
-
-  //     // Ajout des prediction existante à la liste de recherche
-  //     res[0].data.map(data => 
-  //       this.possibilities.push( Object.assign(data, {"searchfield" : {"tag":res.tag, "name":res.name; "actor":res.actor}})));
-  // });
   
 
   public setTitle( newTitle: string) {

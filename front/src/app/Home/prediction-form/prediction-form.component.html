@@ -12,19 +12,20 @@
       </mat-option>
     </mat-autocomplete>
     </mat-form-field></td>-->
-    <td><mat-form-field class="example-full-width">
+    <td><mat-form-field class="example-full-width" hideRequiredMarker>
       <input matInput placeholder="Actor 1" [matAutocomplete]="auto3" [formControl]="dataCtrlActors" class="form-control" id="actor" [(ngModel)]="model.actor1" name="actor1" required>
       <mat-autocomplete #auto3="matAutocomplete">
-      <mat-option *ngFor="let item of filteredDatasActors | async" [value]="item.name">
-        <span>{{ item.name }}</span>
+      <mat-option *ngFor="let item of filteredDatasActors | async" [value]="item.Code">
+        <span>{{ item.Nom }}</span>
       </mat-option>
     </mat-autocomplete>
     </mat-form-field></td>
-     <td><mat-form-field class="example-full-width">
+     <td>
+      <mat-form-field class="example-full-width" hideRequiredMarker>
       <input matInput placeholder="Actor 2" [matAutocomplete]="auto4" [formControl]="dataCtrlActors2" class="form-control" id="actor2" [(ngModel)]="model.actor2" required>
       <mat-autocomplete #auto4="matAutocomplete">
-      <mat-option *ngFor="let item of filteredDatasActors2 | async" [value]="item.name">
-        <span>{{ item.name }}</span>
+      <mat-option *ngFor="let item of filteredDatasActors2 | async" [value]="item.Code">
+        <span>{{ item.Nom }}</span>
       </mat-option>
     </mat-autocomplete>
     </mat-form-field></td>

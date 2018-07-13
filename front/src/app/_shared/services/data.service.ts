@@ -37,6 +37,7 @@ prediction={}
   private apiUrl="http://ec2-34-251-121-180.eu-west-1.compute.amazonaws.com:5000/predict";
   private apiUrl2 = "http://localhost:3000/mongo/prediction/history";
   private apiUrl3 = "http://localhost:3000/mongo/action";
+  private apiUrl4 = "http://localhost:3000/mongo/actors/all";
 
   data: any = {};
 
@@ -49,7 +50,6 @@ prediction={}
   }
 
   getHistory(prediction): Observable<any>{
-    console.log(prediction)
     return this._http.post(this.apiUrl2, prediction, httpOptions)
     .pipe(
       catchError(this.handleError<any[]>('history', []))
@@ -63,14 +63,32 @@ prediction={}
     );
   }
 
+   getActors(){
+    return new Promise((resolve, reject) => {
+      this._http.get(this.apiUrl4)
+        .subscribe(
+         data => {
+          resolve(data)
+        },
+         error => {
+          reject(error);
+        },
+);
+    });
+    // return this._http.get(this.apiUrl4)
+    // .pipe(
+    //   catchError(this.handleError<any[]>('actors', []))
+    // );
+  }
+
   // getPrediction(prediction): Promise<any>{
      getPrediction(predict){
-    console.log(predict)
-     this.prediction = ({date:"20180705",event:10})
-    this.getAction(this.prediction.event).subscribe(res =>
+    console.log("PREDICTION: "+predict)
+     this.prediction = ({date:"20180715",event:10})
+    this.getAction(this.prediction["event"]).subscribe(res =>
     {
 
-      this.prediction.event=res[0].event;
+      this.prediction["event"]=res[0].event;
     })
 
       console.log(this.prediction)

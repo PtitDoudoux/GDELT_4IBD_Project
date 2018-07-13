@@ -1,4 +1,7 @@
-<!-- <img id="bar" width="1200" height="20" src="../../../assets/images/bar.svg"> -->
+
+<div class="container">
+<div fxLayout="column" class="center_div">
+
 <span id="timeline">
 
 	<table>
@@ -19,83 +22,99 @@
 	<mat-card class="example-card">
   <mat-card-header>
     
-    <mat-card-title>{{result.formData.actor1}}</mat-card-title>
-    <mat-card-subtitle>{{result.formData.actor2}}</mat-card-subtitle>
+   <mat-card-subtitle>{{result.formData.actor1}}</mat-card-subtitle>
+    <mat-card-subtitle>to {{result.formData.actor2}}</mat-card-subtitle>
   </mat-card-header>
  
-  <mat-card-content>
+ <mat-card-content  *ngIf="result.history.EventCode; else noHistory">
     <p>
-      {{result.formData.actor1}} {{result.history.EventCode}} {{result.formData.actor2}} 
+            At {{dates}}, {{result.formData.actor1}} did {{result.history.EventCode}} to {{result.formData.actor2}} 
     </p>
   </mat-card-content>
+  <ng-template #noHistory>
+  No historic event in {{dates}} found between {{result.formData.actor1}} and {{result.formData.actor2}} 
+</ng-template>
 </mat-card>
 </td>
 <td>
 	<mat-card class="example-card">
   <mat-card-header>
     
-    <mat-card-title>{{result.formData.actor1}}</mat-card-title>
-    <mat-card-subtitle>{{result.formData.actor2}}</mat-card-subtitle>
+    <mat-card-subtitle>{{result.formData.actor1}}</mat-card-subtitle>
+    <mat-card-subtitle>to {{result.formData.actor2}}</mat-card-subtitle>
   </mat-card-header>
  
-  <mat-card-content>
+ <mat-card-content  *ngIf="result.history.EventCode; else noHistory1">
     <p>
-      {{result.formData.actor1}} {{result.history.EventCode}} {{result.formData.actor2}} 
+           At {{dates}}, {{result.formData.actor1}} did {{result.history.EventCode}} to {{result.formData.actor2}}  
     </p>
   </mat-card-content>
+  <ng-template #noHistory1>
+  No historic event in {{dates}} found between {{result.formData.actor1}} and {{result.formData.actor2}} 
+</ng-template>
 </mat-card>
 </td>
 <td>
 	<mat-card class="example-card">
   <mat-card-header>
     
-    <mat-card-title>{{result.formData.actor1}}</mat-card-title>
-    <mat-card-subtitle>{{result.formData.actor2}}</mat-card-subtitle>
+   <mat-card-subtitle>{{result.formData.actor1}}</mat-card-subtitle>
+    <mat-card-subtitle>to {{result.formData.actor2}}</mat-card-subtitle>
   </mat-card-header>
  
-  <mat-card-content>
+  <mat-card-content  *ngIf="result.history.EventCode; else noHistory2">
     <p>
-     {{result.formData.actor1}} {{result.history.EventCode}} {{result.formData.actor2}} 
+          At {{dates}}, {{result.formData.actor1}} did {{result.history.EventCode}} to {{result.formData.actor2}} 
     </p>
   </mat-card-content>
+  <ng-template #noHistory2>
+ No historic event in {{dates}} found between {{result.formData.actor1}} and {{result.formData.actor2}} 
+</ng-template>
 </mat-card>
 </td>
 <td>
 	<mat-card class="example-card">
   <mat-card-header>
     
-    <mat-card-title>{{result.formData.actor1}}</mat-card-title>
-    <mat-card-subtitle>{{result.formData.actor2}}</mat-card-subtitle>
+    <mat-card-subtitle>{{result.formData.actor1}}</mat-card-subtitle>
+    <mat-card-subtitle>to {{result.formData.actor2}}</mat-card-subtitle>
   </mat-card-header>
  
-  <mat-card-content>
+ <mat-card-content  *ngIf="result.history.EventCode; else noHistory3">
     <p>
-          {{result.formData.actor1}} {{result.history.EventCode}} {{result.formData.actor2}} 
+      At {{dates}}, {{result.formData.actor1}} did {{result.history.EventCode}} to {{result.formData.actor2}} 
     </p>
   </mat-card-content>
+  <ng-template #noHistory3>
+  No historic event in {{dates}} found between {{result.formData.actor1}} and {{result.formData.actor2}} 
+</ng-template>
 </mat-card>
 </td>
 <td>
 	<mat-card class="example-card">
   <mat-card-header>
     
-    <mat-card-title>{{result.formData.actor1}}</mat-card-title>
-    <mat-card-subtitle>{{result.formData.actor2}}</mat-card-subtitle>
+    <mat-card-subtitle>{{result.formData.actor1}}</mat-card-subtitle>
+    <mat-card-subtitle>to {{result.formData.actor2}}</mat-card-subtitle>
   </mat-card-header>
- 
-  <mat-card-content>
+
+  <mat-card-content  *ngIf="result.predicted; else noPredict">
     <p>
-          {{result.formData.actor1}} {{result.predicted.event}} {{result.formData.actor2}} 
+            At {{dates}}, {{result.formData.actor1}} will probably {{result.history.EventCode}} to {{result.formData.actor2}} 
     </p>
   </mat-card-content>
+  <ng-template #noPredict>
+  No event can be predicted for {{date}} between {{result.formData.actor1}} and {{result.formData.actor2}} 
+</ng-template>
 </mat-card>
 </td></tr>
 		
 </table>
      </span>
+</div>
+      <button mat-raised-button (click)="back()" style="position:absolute;bottom:20px">Back</button>
 
-      <button mat-raised-button (click)="back()">Back</button>
-
+</div>
         <!--  <div>
 	<table>
 		<th>
@@ -107,5 +126,4 @@ PREDICTION:</th>
 </table>
 </div> -->
 
- <!-- <img id="bar" width="1200" height="20" src="../../../assets/images/bar.svg"> -->
 

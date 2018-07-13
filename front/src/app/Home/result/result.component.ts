@@ -17,12 +17,15 @@ export class ResultComponent implements OnInit{
 
 	ngOnInit(){
 		var res = this.result
-	 console.log(res.history)
-    console.log(res)	
-    this.dates=res.history.SQLDATE.toString().substring(0,4);
-	this.date=this.result.predicted.date.substring(0,4);
+console.log(res)
+   res.history.SQLDATE ? this.dates=res.history.SQLDATE.toString().substring(0,4) : this.dates = "YYYYMMDD"
+
+   res.predicted.date ? this.date=this.result.predicted.date.substring(0,4) :this.date = "YYYYMMDD"
+
+	
 	console.log(this.dates)
-	}
+	console.log(this.date)
+}
 	back(){
 		location.reload();
 	}

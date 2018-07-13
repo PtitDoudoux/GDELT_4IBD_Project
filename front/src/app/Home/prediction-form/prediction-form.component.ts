@@ -13,6 +13,7 @@ import 'rxjs/add/operator/throttleTime';
 import 'rxjs/add/observable/fromEvent';
 import {startWith} from 'rxjs/operators/startWith';
 import {map} from 'rxjs/operators/map';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-prediction-form',
@@ -54,18 +55,19 @@ export class PredictionFormComponent implements OnInit {
     this.startDate = new Date();
     this.minDate = new Date();
     
+   // console.log(this.datas)
     this.dataCtrlActors = new FormControl();
     this.filteredDatasActors  = this.dataCtrlActors.valueChanges
     .pipe(
       startWith(''),
-      map(data => data ? this.filterData(data, this.datas[0].actors) : this.datas[0].actors.slice())
+      map(data => data ? this.filterData(data, this.datas) : this.datas.slice())
       );
 
     this.dataCtrlActors2 = new FormControl();
     this.filteredDatasActors2  = this.dataCtrlActors2.valueChanges
     .pipe(
       startWith(''),
-      map(data => data ? this.filterData(data, this.datas[0].actors) : this.datas[0].actors.slice())
+      map(data => data ? this.filterData(data, this.datas) : this.datas.slice())
       );
 
     // this.dataCtrlTags = new FormControl();
@@ -79,53 +81,47 @@ export class PredictionFormComponent implements OnInit {
    search(){
   	this.submitted = true;
     if(this.picker_date){
-     this.model.date=this.formatDate();
+       console.log(this.model.date)
+     this.model.date=this.formatDate(this.picker_date);
+
      if(typeof(this.model)!='undefined'){
      	// console.log(this.model);
+      console.log(this.model)
+      var actor1 = this.model.actor1
+      var actor2 = this.model.actor2
+      var tmp1 = this.datas.find(function(element) {
+        if(element.Code == actor1)
+        return element.Nom;
+      });
+      var tmp2 = this.datas.find(function(element) {
+        if(element.Code == actor2)
+        return element.Nom;
+      });
 
-      this.result = {"formData":this.model,
+      var toSend = {"actor1":tmp1.Nom,"actor2":tmp2.Nom, "date":this.model.date}
+
+      console.log(this.model.date)
+
+      this.result = {"formData":toSend,
                     "predicted":this.dataService.getPrediction(this.model),
-                    "history":null}
+                    "history":{}}
 
+      var a = moment(this.model.date, "YYYYMMDD");
+      a.format("MMM Do YYYY");
+      console.log(a)
+      // then use any of moment's manipulation or display functionality
       this.dataService.getHistory(this.model).subscribe(res =>
       {
-        this.result.history = res
-        this.dataService.getAction(this.result.history.EventCode).subscribe(res =>{
-            this.result.history.EventCode=res[0].event;
-      console.log(this.result)
+        console.log("RESULT: "+res)
+        res ? this.result["history"] = res :  this.messageEvent.emit(this.result)
+        if(res!=null)
+        this.dataService.getAction(this.result["history"]["EventCode"]).subscribe(res =>{
+            this.result["history"]["EventCode"]=res[0].event;
         this.messageEvent.emit(this.result);
-      
-        })
-      })
-
-      
-      
+        });
+     });
+      }
      
-
-      // console.log(obje)
-    //   this.messageEvent.emit(this.history);
-    //   this.getAction(this.prediction.event).subscribe(res =>
-    // {
-    //   this.prediction.event=res[0].event;
-    // })
-      
-    
-
-      // this.messageEvent.emit(result);
-
-  // 	this.dataService.getPrediction(this.model).then(
-  //      res => { 
-  //      	console.log(res)
-	 //    //    for (var prop in res) {
-	 //  		// 	console.log(prop);
-	 //  		// }
-  // 		},
-  //      err => console.log(err)
-  //      // () => console.log('Complete!')
-  // );
-  // 	}
-       // this.messageEvent.emit(this.model);
-  } 
     }
 }
   
@@ -140,12 +136,14 @@ export class PredictionFormComponent implements OnInit {
 
   }
 
-  formatDate(){
-    return ""+this.picker_date.getFullYear()+(this.picker_date.getMonth()+1).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})+this.picker_date.getDate().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
+  formatDate(date){
+    return ""+date.getFullYear()+(date.getMonth()+1).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})+date.getDate().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
   }
+
+
 
   filterData(name: string, datas: any) {
     return datas.filter(data =>
-      data.name.toLowerCase().indexOf(name.toLowerCase()) === 0);
+      data.Nom.toLowerCase().indexOf(name.toLowerCase()) === 0);
   }
 }
