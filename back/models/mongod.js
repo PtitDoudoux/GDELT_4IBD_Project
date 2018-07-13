@@ -73,6 +73,16 @@ function storeHistory(history){
 }
 exports.storeHistory = storeHistory;
 
+function getActors(){
+  var collection_name = "ref_actor";
+
+  return connection()
+  .then(function(db){
+     col = db.collection(collection_name);
+     return col.find({}).toArray()
+   });
+}
+exports.getActors = getActors;
 
 function getAction(code){
   var codep=parseInt(code);
@@ -86,19 +96,17 @@ function getAction(code){
 }
 exports.getAction = getAction;
 
-function getHistory(actor1,actor2,d){
+function getHistory(actor1,actor2){
   var collection_name = "history";
-  console.log(typeof(actor1))
-  console.log(typeof(actor2))
-  d=20180524
-  
-  // actor1 ="USA"
-  // actor2 ="GOV"
-  // d=20180524
+  d1=20180524
+  d2=20170224
+  d3=20160524
+  d4=20180524
+
   return connection()
   .then(function(db){
      col = db.collection(collection_name);
-     return col.findOne({"Actor1Code":actor1, "Actor2Code":actor2, "SQLDATE":d})
+     return col.findOne({$or:[{"Actor1Code":actor1, "Actor2Code":actor2, "SQLDATE":d1},{"Actor1Code":actor1, "Actor2Code":actor2, "SQLDATE":d2},{"Actor1Code":actor1, "Actor2Code":actor2, "SQLDATE":d3},{"Actor1Code":actor1, "Actor2Code":actor2, "SQLDATE":d4})
    });
 }
 exports.getHistory = getHistory;

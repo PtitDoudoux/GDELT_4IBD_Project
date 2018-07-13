@@ -15,10 +15,9 @@ router.get('/prediction/documents/count/:filter', function (req, res, next){
 
 router.post('/prediction/history', function (req, res){
      var actor1 = req.body.actor1,
-         actor2 = req.body.actor2,
-         date = req.body.date;
+         actor2 = req.body.actor2;
 
-     mongo.getHistory(actor1,actor2,date)
+     mongo.getHistory(actor1,actor2)
       .then(function(result){
             res.json(result);
         });
@@ -28,6 +27,13 @@ router.post('/prediction/history', function (req, res){
 router.get('/action/:code', function (req, res, next){
         var code = req.params.code;
         mongo.getAction(code)
+        .then(function (result) { 
+        res.json(result); 
+    });
+});
+
+router.get('/actors/all', function (req, res, next){
+        mongo.getActors()
         .then(function (result) { 
         res.json(result); 
     });
