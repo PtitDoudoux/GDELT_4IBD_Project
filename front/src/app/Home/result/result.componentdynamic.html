@@ -1,0 +1,125 @@
+
+<div class="container">
+<div fxLayout="column" class="center_div">
+
+<span id="timeline">
+
+<div **ngIf="result.history.EventCode; else noHistory">
+	<table *ngFor="let item of result.history">
+		<tr><td><!-- </td><mat-card class="date">{{dates}}</mat-card></td> --><!-- <p *ngIf="result.history.EventCode"> --><td><mat-card class="date">{{dates}}</mat-card><!-- </td><td><mat-card class="date">{{dates}}</mat-card></td><td><mat-card class="date">{{dates}}</mat-card></td></p><td><mat-card class="date">{{date}}</mat-card></td> --></tr>
+		<tr></tr>
+		<tr><td>
+	<img class="icon" src="../../../assets/images/info-button.png"></td>
+	<!-- <p *ngIf="result.history.EventCode"><td>
+<img class="icon" src="../../../assets/images/info-button.png"></td>
+<td>
+<img class="icon" src="../../../assets/images/info-button.png"></td>
+	<td>
+<img class="icon" src="../../../assets/images/info-button.png"></td></p> -->
+	<td>
+<img class="icon" src="../../../assets/images/help-round-button.png"></td>
+</tr>
+		<tr id="content-timeline"><td>
+	<mat-card class="example-card">
+  <mat-card-header>
+    
+   <mat-card-subtitle>{{result.formData.actor1}}</mat-card-subtitle>
+    <mat-card-subtitle>to {{result.formData.actor2}}</mat-card-subtitle>
+  </mat-card-header>
+ 
+ <mat-card-content  *ngIf="result.history.EventCode; else noHistory">
+    <p>
+            At {{dates}}, {{result.formData.actor1}} did {{result.history.EventCode}} to {{result.formData.actor2}} 
+    </p>
+  </mat-card-content>
+  <ng-template #noHistory>
+  No historic event found between {{result.formData.actor1}} and {{result.formData.actor2}} 
+</ng-template>
+</mat-card>
+</td><!-- <p *ngIf="result.history.EventCode">
+<td>
+	<mat-card class="example-card">
+  <mat-card-header>
+    
+    <mat-card-subtitle>{{result.formData.actor1}}</mat-card-subtitle>
+    <mat-card-subtitle>to {{result.formData.actor2}}</mat-card-subtitle>
+  </mat-card-header>
+ 
+ <mat-card-content>
+    <p>
+           At {{dates}}, {{result.formData.actor1}} did {{result.history.EventCode}} to {{result.formData.actor2}}  
+    </p>
+  </mat-card-content>
+</mat-card>
+</td>
+<td>
+	<mat-card class="example-card">
+  <mat-card-header>
+    
+   <mat-card-subtitle>{{result.formData.actor1}}</mat-card-subtitle>
+    <mat-card-subtitle>to {{result.formData.actor2}}</mat-card-subtitle>
+  </mat-card-header>
+ 
+  <mat-card-content>
+    <p>
+          At {{dates}}, {{result.formData.actor1}} did {{result.history.EventCode}} to {{result.formData.actor2}} 
+    </p>
+  </mat-card-content>
+</mat-card>
+</td>
+<td>
+	<mat-card class="example-card">
+  <mat-card-header>
+    
+    <mat-card-subtitle>{{result.formData.actor1}}</mat-card-subtitle>
+    <mat-card-subtitle>to {{result.formData.actor2}}</mat-card-subtitle>
+  </mat-card-header>
+ 
+ <mat-card-content>
+    <p>
+      At {{dates}}, {{result.formData.actor1}} did {{result.history.EventCode}} to {{result.formData.actor2}} 
+    </p>
+  </mat-card-content>
+</mat-card>
+</td></p> -->
+<td>
+	<mat-card class="example-card">
+  <mat-card-header>
+    
+    <mat-card-subtitle>{{result.formData.actor1}}</mat-card-subtitle>
+    <mat-card-subtitle>to {{result.formData.actor2}}</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content  *ngIf="result.predicted; else noPredict">
+    <p>
+            At {{date}}, {{result.predicted.actor1}} will probably {{result.predicted.event}} to {{result.predicted.actor2}} 
+    </p>
+  </mat-card-content>
+
+  <ng-template #noPredict>
+  No Prediction event found in {{date}} between {{result.formData.actor1}} and {{result.formData.actor2}} 
+</ng-template>
+</mat-card>
+</td></tr>
+		
+</table>
+<ng-template #noHistory>
+  No Prediction event found in {{date}} between {{result.formData.actor1}} and {{result.formData.actor2}} 
+</ng-template>
+     </span>
+</div>
+      <button mat-raised-button (click)="back()" style="position:absolute;bottom:20px">Back</button>
+
+</div>
+        <!--  <div>
+	<table>
+		<th>
+PREDICTION:</th>
+<td>{{result.tag}}</td>
+<td>{{result.name}}</td>
+<td>{{result.actor}}</td>
+<td>{{result.date}}</td>
+</table>
+</div> -->
+
+

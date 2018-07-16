@@ -18,7 +18,10 @@ export class HomeComponent implements OnInit{
 
   error: string;
   currentPossibilities: any;
+  currentPossibilities1: any;
+  currentPossibilities2: any;
   found: any;
+  actorCode:any;
 
 
   constructor(private title : Title, private _service : DataService) {
@@ -28,21 +31,28 @@ export class HomeComponent implements OnInit{
 
   ngOnInit() {
     this.found = false;
-    this.getAutocomplete();
+    this.getAutocompleteActor();
+    this.getAutocompleteActor1();
+     this.getAutocompleteActor2();
   }
 
  submitted($event) {
     this.found = $event;
   }
 
-  getAutocomplete(){
- this._service.getActors().then(res => {
+ getAutocompleteActor(){
+ this._service.getActorCode().then(res => {
       this.currentPossibilities = res;
   })
   }
 
+  getAutocompleteActor1(){
+    this._service.getActors1().then(res => { this.currentPossibilities1 = res })
+  }
 
-  
+   getAutocompleteActor2(){
+    this._service.getActors2().then(res => { this.currentPossibilities2 = res })
+  }
 
   public setTitle( newTitle: string) {
     this.title.setTitle( newTitle );

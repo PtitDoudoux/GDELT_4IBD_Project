@@ -1,118 +1,111 @@
 
 <div class="container">
-<div fxLayout="column" class="center_div">
+  <div fxLayout="column" class="center_div">
 
-<span id="timeline">
+    <span id="timeline">
 
-	<table>
-		<tr><td><mat-card class="date">{{dates}}</mat-card></td><td><mat-card class="date">{{dates}}</mat-card></td><td><mat-card class="date">{{dates}}</mat-card></td><td><mat-card class="date">{{dates}}</mat-card></td><td><mat-card class="date">{{date}}</mat-card></td></tr>
-		<tr></tr>
-		<tr><td>
-	<img class="icon" src="../../../assets/images/info-button.png"></td>
-	<td>
-<img class="icon" src="../../../assets/images/info-button.png"></td>
-<td>
-<img class="icon" src="../../../assets/images/info-button.png"></td>
-	<td>
-<img class="icon" src="../../../assets/images/info-button.png"></td>
-	<td>
-<img class="icon" src="../../../assets/images/help-round-button.png"></td>
-</tr>
-		<tr id="content-timeline"><td>
-	<mat-card class="example-card">
-  <mat-card-header>
-    
-   <mat-card-subtitle>{{result.formData.actor1}}</mat-card-subtitle>
-    <mat-card-subtitle>to {{result.formData.actor2}}</mat-card-subtitle>
-  </mat-card-header>
- 
- <mat-card-content  *ngIf="result.history.EventCode; else noHistory">
-    <p>
-            At {{dates}}, {{result.formData.actor1}} did {{result.history.EventCode}} to {{result.formData.actor2}} 
-    </p>
-  </mat-card-content>
-  <ng-template #noHistory>
-  No historic event in {{dates}} found between {{result.formData.actor1}} and {{result.formData.actor2}} 
-</ng-template>
-</mat-card>
-</td>
-<td>
-	<mat-card class="example-card">
-  <mat-card-header>
-    
-    <mat-card-subtitle>{{result.formData.actor1}}</mat-card-subtitle>
-    <mat-card-subtitle>to {{result.formData.actor2}}</mat-card-subtitle>
-  </mat-card-header>
- 
- <mat-card-content  *ngIf="result.history.EventCode; else noHistory1">
-    <p>
-           At {{dates}}, {{result.formData.actor1}} did {{result.history.EventCode}} to {{result.formData.actor2}}  
-    </p>
-  </mat-card-content>
-  <ng-template #noHistory1>
-  No historic event in {{dates}} found between {{result.formData.actor1}} and {{result.formData.actor2}} 
-</ng-template>
-</mat-card>
-</td>
-<td>
-	<mat-card class="example-card">
-  <mat-card-header>
-    
-   <mat-card-subtitle>{{result.formData.actor1}}</mat-card-subtitle>
-    <mat-card-subtitle>to {{result.formData.actor2}}</mat-card-subtitle>
-  </mat-card-header>
- 
-  <mat-card-content  *ngIf="result.history.EventCode; else noHistory2">
-    <p>
+     <table>
+        <tr *ngIf="dates; else noHistoryDate">
+          <td><mat-card class="date">{{dates}}</mat-card></td>
+          <td><mat-card class="date">{{dates}}</mat-card></td>
+          <td><mat-card class="date">{{dates}}</mat-card></td>
+          <td><mat-card class="date">{{dates}}</mat-card></td>
+          <td><mat-card class="date">{{date}}</mat-card></td>
+        </tr>
+         <ng-template #noHistoryDate>
+          <td></td>
+          <td><mat-card class="date">{{date}}</mat-card></td>
+        </ng-template>
+        <tr></tr>
+      <tr *ngIf="dates; else noHistoryDate2">
+        <td><img class="icon" src="../../../assets/images/info-button.png"></td>
+          <td><img class="icon" src="../../../assets/images/info-button.png"></td>
+          <td><img class="icon" src="../../../assets/images/info-button.png"></td>
+          <td><img class="icon" src="../../../assets/images/info-button.png"></td>
+        <td><img class="icon" src="../../../assets/images/help-round-button.png"></td>
+        </tr>
+        <ng-template #noHistoryDate2>
+         <td><img class="icon" src="../../../assets/images/info-button.png"></td>
+          <td><img class="icon" src="../../../assets/images/help-round-button.png"></td>
+        </ng-template>
+      <tr></tr>
+      <tr id="content-timeline">
+        <td>
+       <mat-card class="example-card">
+        <mat-card-header>
+         <mat-card-subtitle>{{result.formData.actor1}}</mat-card-subtitle>
+         <mat-card-subtitle>to {{result.formData.actor2}}</mat-card-subtitle>
+       </mat-card-header>
+       <mat-card-content>
+        <p *ngIf="result.history.EventCode; else noHistory">
           At {{dates}}, {{result.formData.actor1}} did {{result.history.EventCode}} to {{result.formData.actor2}} 
-    </p>
-  </mat-card-content>
-  <ng-template #noHistory2>
- No historic event in {{dates}} found between {{result.formData.actor1}} and {{result.formData.actor2}} 
-</ng-template>
-</mat-card>
-</td>
-<td>
-	<mat-card class="example-card">
-  <mat-card-header>
-    
-    <mat-card-subtitle>{{result.formData.actor1}}</mat-card-subtitle>
-    <mat-card-subtitle>to {{result.formData.actor2}}</mat-card-subtitle>
-  </mat-card-header>
- 
- <mat-card-content  *ngIf="result.history.EventCode; else noHistory3">
+        </p>
+      <ng-template #noHistory>
+        No historic event found between {{result.formData.actor1}} and {{result.formData.actor2}} 
+      </ng-template>
+      </mat-card-content>
+    </mat-card>
+  </td>
+    <td *ngIf="result.history.EventCode">
+     <mat-card class="example-card">
+      <mat-card-header>
+        <mat-card-subtitle>{{result.formData.actor1}}</mat-card-subtitle>
+        <mat-card-subtitle>to {{result.formData.actor2}}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p>
+         At {{dates}}, {{result.formData.actor1}} did {{result.history.EventCode}} to {{result.formData.actor2}}  
+       </p>
+     </mat-card-content>
+   </mat-card>
+ </td>
+<td *ngIf="result.history.EventCode">
+   <mat-card class="example-card">
+    <mat-card-header>
+     <mat-card-subtitle>{{result.formData.actor1}}</mat-card-subtitle>
+     <mat-card-subtitle>to {{result.formData.actor2}}</mat-card-subtitle>
+   </mat-card-header>
+   <mat-card-content>
     <p>
       At {{dates}}, {{result.formData.actor1}} did {{result.history.EventCode}} to {{result.formData.actor2}} 
     </p>
   </mat-card-content>
-  <ng-template #noHistory3>
-  No historic event in {{dates}} found between {{result.formData.actor1}} and {{result.formData.actor2}} 
-</ng-template>
 </mat-card>
 </td>
-<td>
-	<mat-card class="example-card">
+<td *ngIf="result.history.EventCode">
+ <mat-card class="example-card">
   <mat-card-header>
-    
     <mat-card-subtitle>{{result.formData.actor1}}</mat-card-subtitle>
     <mat-card-subtitle>to {{result.formData.actor2}}</mat-card-subtitle>
   </mat-card-header>
-
-  <mat-card-content  *ngIf="result.predicted; else noPredict">
+  <mat-card-content>
     <p>
-            At {{dates}}, {{result.formData.actor1}} will probably {{result.history.EventCode}} to {{result.formData.actor2}} 
+      At {{dates}}, {{result.formData.actor1}} did {{result.history.EventCode}} to {{result.formData.actor2}} 
     </p>
   </mat-card-content>
-  <ng-template #noPredict>
-  No event can be predicted for {{date}} between {{result.formData.actor1}} and {{result.formData.actor2}} 
-</ng-template>
+</mat-card>
+</td>
+<td>
+ <mat-card class="example-card">
+  <mat-card-header>
+    <mat-card-subtitle>{{result.formData.actor1}}</mat-card-subtitle>
+    <mat-card-subtitle>to {{result.formData.actor2}}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <p *ngIf="result.predicted; else noPredict">
+      At {{date}}, {{result.formData.actor1}} will probably {{result.predicted.event}} to {{result.formData.actor2}} 
+    </p>
+    <ng-template #noPredict>
+    No Prediction event found in {{date}} between {{result.formData.actor1}} and {{result.formData.actor2}} 
+  </ng-template>
+  </mat-card-content>
 </mat-card>
 </td></tr>
-		
+
 </table>
-     </span>
+</span>
 </div>
-      <button mat-raised-button (click)="back()" style="position:absolute;bottom:20px">Back</button>
+<button mat-raised-button (click)="back()" style="position:absolute;bottom:20px">Back</button>
 
 </div>
         <!--  <div>

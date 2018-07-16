@@ -1,14 +1,38 @@
-Machine Learning
+ TODO:
 
- ☐ Plusieurs entrées (4 weeks -> 1 weeks predicted)
+ UX
 
+ ☐ Optimiser le temps d'affichage
+ ☐ Animation resultat
+
+En cours:
 
 Design
 
-Resultats:
- ☐ Timeline horizontal
-     ☐ Event passed
-     ☐ Event(s) predicted
-         ☐  If not resultat -> try with 1 actor
+ ☐ Création dynamique des élements
+ ☐ Sous titres pour les catégories d'acteur
 
- 
+Traitement
+
+ ☐ Traiter plus de prediction
+
+
+Done:
+
+Machine Learning
+
+✔ Plusieurs entrées (4 weeks -> 1 weeks predicted) @done (18-07-17 01:16)
+
+Design
+
+ ✔ Timeline horizontal @done (18-07-17 01:16)
+     ✔ Event passed @done (18-07-17 01:16)
+     ✔ Event(s) predicted @done (18-07-17 01:16)
+  ✔ Affichage dynamique du résultat @done (18-07-17 01:24)
+  ✔ Traitement en cas de non résultat @done (18-07-17 01:25)
+
+
+Aborted:
+
+ ☐ Enrichissement dynamique de tous les acteurs en fonction du referentiel en base
+     => Soucis de perf

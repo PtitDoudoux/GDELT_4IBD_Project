@@ -31,7 +31,8 @@ export class PredictionFormComponent implements OnInit {
 
   // dataCtrlTags: FormControl;
   dataCtrlActors: FormControl;
-    dataCtrlActors2: FormControl;
+  dataCtrlActors2: FormControl
+
   // filteredDatasTags: Observable<any[]>;
   filteredDatasActors: Observable<any[]>;
   filteredDatasActors2: Observable<any[]>;
@@ -39,17 +40,14 @@ export class PredictionFormComponent implements OnInit {
   submitted : any;
 
   @Input() datas : any;
+  @Input() datas1 : any;
+  @Input() datas2 : any;
   @Output() messageEvent = new EventEmitter();
 
   constructor(private router: Router, private dataService : DataService) { }
 
   model = new Data(null,null,null);
 
- 
-
-  /*newPredict() {
-    this.model = new Data("test","test","test", "test");
-  }*/
 
   ngOnInit() {
     this.startDate = new Date();
@@ -70,22 +68,17 @@ export class PredictionFormComponent implements OnInit {
       map(data => data ? this.filterData(data, this.datas) : this.datas.slice())
       );
 
-    // this.dataCtrlTags = new FormControl();
-    // this.filteredDatasTags = this.dataCtrlTags.valueChanges
-    // .pipe(
-    //   startWith(''),
-    //   map(data => data ? this.filterData(data, this.datas[0].tags) : this.datas[0].tags.slice())
-    //   );
+    console.log(this.datas)
+    console.log(this.datas1)
+    console.log(this.datas2)
    }
 
    search(){
   	this.submitted = true;
     if(this.picker_date){
-       console.log(this.model.date)
      this.model.date=this.formatDate(this.picker_date);
 
      if(typeof(this.model)!='undefined'){
-     	// console.log(this.model);
       console.log(this.model)
       var actor1 = this.model.actor1
       var actor2 = this.model.actor2
@@ -100,23 +93,20 @@ export class PredictionFormComponent implements OnInit {
 
       var toSend = {"actor1":tmp1.Nom,"actor2":tmp2.Nom, "date":this.model.date}
 
-      console.log(this.model.date)
+      console.log(toSend) 
 
       this.result = {"formData":toSend,
                     "predicted":this.dataService.getPrediction(this.model),
                     "history":{}}
 
-      var a = moment(this.model.date, "YYYYMMDD");
-      a.format("MMM Do YYYY");
-      console.log(a)
-      // then use any of moment's manipulation or display functionality
+     
       this.dataService.getHistory(this.model).subscribe(res =>
       {
         console.log("RESULT: "+res)
         res ? this.result["history"] = res :  this.messageEvent.emit(this.result)
         if(res!=null)
         this.dataService.getAction(this.result["history"]["EventCode"]).subscribe(res =>{
-            this.result["history"]["EventCode"]=res[0].event;
+            this.result["history"]["EventCode"]=res["Action"];
         this.messageEvent.emit(this.result);
         });
      });

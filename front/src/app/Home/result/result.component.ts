@@ -1,5 +1,6 @@
 import { Component, Input, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
+import * as moment from 'moment';
 
 @Component({
 	selector: 'app-result',
@@ -17,17 +18,20 @@ export class ResultComponent implements OnInit{
 
 	ngOnInit(){
 		var res = this.result
-console.log(res)
-   res.history.SQLDATE ? this.dates=res.history.SQLDATE.toString().substring(0,4) : this.dates = "YYYYMMDD"
+		console.log("REEES : "+this.result)
 
-   res.predicted.date ? this.date=this.result.predicted.date.substring(0,4) :this.date = "YYYYMMDD"
+   res.history.SQLDATE ? this.dates=this.formatDate(res.history.SQLDATE.toString()) : this.dates = ""
 
-	
-	console.log(this.dates)
-	console.log(this.date)
+   res.predicted.date ? this.date=this.formatDate(res.formData.date) : this.date = ""
 }
 	back(){
 		location.reload();
 	}
 
+	formatDate(date)
+	{
+	  var a = moment(date, "YYYYMMDD");
+      a.format("MMM Do YYYY");
+      return a["_d"].toString().substr(0, 11)
+	}
 }

@@ -1,20 +1,10 @@
 <div class="container">
 <div fxLayout="column" class="center_div" *ngIf="datas">
 	
-
-<!-- <form [formGroup] = "form" (ngSubmit) = "onSubmit(form.value)"> -->
   <table class="example-full-width" cellspacing="10px"><tr>
-  	<!--<td><mat-form-field class="example-full-width">
-      <input matInput placeholder="#Tag" [matAutocomplete]="auto1" [formControl]="dataCtrlTags" class="form-control" id="tag" [(ngModel)]="model.tag" name="tag" spellcheck="false" required>
-      <mat-autocomplete #auto1="matAutocomplete">
-      <mat-option *ngFor="let item of filteredDatasTags | async" [value]="item.name">
-        <span>{{ item.name }}</span>
-      </mat-option>
-    </mat-autocomplete>
-    </mat-form-field></td>-->
     <td><mat-form-field class="example-full-width" hideRequiredMarker>
-      <input matInput placeholder="Actor 1" [matAutocomplete]="auto3" [formControl]="dataCtrlActors" class="form-control" id="actor" [(ngModel)]="model.actor1" name="actor1" required>
-      <mat-autocomplete #auto3="matAutocomplete">
+      <input matInput placeholder="Actor 1" [matAutocomplete]="auto1" [formControl]="dataCtrlActors" class="form-control" id="actor" [(ngModel)]="model.actor1" name="actor1" required>
+      <mat-autocomplete #auto1="matAutocomplete">
       <mat-option *ngFor="let item of filteredDatasActors | async" [value]="item.Code">
         <span>{{ item.Nom }}</span>
       </mat-option>
@@ -22,8 +12,8 @@
     </mat-form-field></td>
      <td>
       <mat-form-field class="example-full-width" hideRequiredMarker>
-      <input matInput placeholder="Actor 2" [matAutocomplete]="auto4" [formControl]="dataCtrlActors2" class="form-control" id="actor2" [(ngModel)]="model.actor2" required>
-      <mat-autocomplete #auto4="matAutocomplete">
+      <input matInput placeholder="Actor 2" [matAutocomplete]="auto3" [formControl]="dataCtrlActors2" class="form-control" id="actor2" [(ngModel)]="model.actor2" required>
+      <mat-autocomplete #auto3="matAutocomplete">
       <mat-option *ngFor="let item of filteredDatasActors2 | async" [value]="item.Code">
         <span>{{ item.Nom }}</span>
       </mat-option>
@@ -45,7 +35,6 @@
             <mat-icon>search</mat-icon>
           </button>
         </div>
-     	   <!-- </form> -->
       </div>
 
  

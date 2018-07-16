@@ -7,15 +7,12 @@
     <img id="smoke2" width="50" src="../../assets/images/smoke.svg">
 
 </div>
-<div id="form" *ngIf="currentPossibilities">
-<app-prediction-form [datas]=currentPossibilities (messageEvent)="submitted($event)"></app-prediction-form>
+<div id="form" *ngIf="currentPossibilities && currentPossibilities1 && currentPossibilities2">
+<app-prediction-form [datas]=currentPossibilities [datas1]=currentPossibilities1 [datas2]=currentPossibilities2 (messageEvent)="submitted($event)"></app-prediction-form>
 </div>
 </div>
  <img id="bar" width="1200" height="20" src="../../../assets/images/bar.svg">
 
-<!-- <app-search-bar [datas]=currentPossibilities.tags (selected)="onSelected($event)"></app-search-bar>
-<app-search-bar [datas]=currentPossibilities.names (selected)="onSelected($event)"></app-search-bar>
-<app-search-bar [datas]=currentPossibilities.authors (selected)="onSelected($event)"></app-search-bar> -->
     <div id="result" *ngIf="found">
     	<app-result [result]=found></app-result>
     </div>

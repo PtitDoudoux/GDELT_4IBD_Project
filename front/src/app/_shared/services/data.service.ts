@@ -7,6 +7,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/toPromise';
 import { HttpErrorHandler, HandleError } from '../../_core/config/http-error-handler.service';
+import * as moment from 'moment';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -15,31 +16,31 @@ const httpOptions = {
   })
 };
 
-export interface Data {
-  "id":	number;
-  "author":	string;
-  "data": string;
-  "tag":  string;
-}
 
 export interface Result {
-  "id":  number;
-  "author":  string;
-  "data": string;
-  "tag":  string;
+  "actor1":  number;
+  "actor2":  string;
+  "prediction": string;
 }
 
 
 @Injectable()
 export class DataService {
-//?date=20180706&actor1=fra&actor2=fra
 prediction={}
   private apiUrl="http://ec2-34-251-121-180.eu-west-1.compute.amazonaws.com:5000/predict";
   private apiUrl2 = "http://localhost:3000/mongo/prediction/history";
   private apiUrl3 = "http://localhost:3000/mongo/action";
-  private apiUrl4 = "http://localhost:3000/mongo/actors/all";
+  private apiUrl4 = "http://localhost:3000/mongo/actors1/all";
+  private apiUrl5 = "http://localhost:3000/mongo/actors2/all";
+  private apiUrl6 = "http://localhost:3000/mongo/actors/all";
 
-  data: any = {};
+  data: any;
+  actorCode: any;
+  found:any;
+  actors:any;
+  names:any;
+  actorswn:any
+
 
   private handleError: HandleError;
 
@@ -63,7 +64,7 @@ prediction={}
     );
   }
 
-   getActors(){
+   getActors1(){
     return new Promise((resolve, reject) => {
       this._http.get(this.apiUrl4)
         .subscribe(
@@ -75,24 +76,55 @@ prediction={}
         },
 );
     });
-    // return this._http.get(this.apiUrl4)
-    // .pipe(
-    //   catchError(this.handleError<any[]>('actors', []))
-    // );
+  }
+
+
+  getActors2(){
+    return new Promise((resolve, reject) => {
+      this._http.get(this.apiUrl5)
+        .subscribe(
+         data => {
+
+          resolve(data)
+        },
+         error => {
+          reject(error);
+        },
+);
+    });
+  }
+
+  getActorCode(){
+    return new Promise((resolve, reject) => {
+      this._http.get(this.apiUrl6)
+        .subscribe(
+         data => {
+          resolve(data)
+        },
+         error => {
+          reject(error);
+        },
+);
+    });
   }
 
   // getPrediction(prediction): Promise<any>{
      getPrediction(predict){
-    console.log("PREDICTION: "+predict)
-     this.prediction = ({date:"20180715",event:10})
+     console.log(predict)
+     this.prediction = ({date:"20180715",event:"010"})
+
     this.getAction(this.prediction["event"]).subscribe(res =>
     {
-
-      this.prediction["event"]=res[0].event;
+      console.log(res)
+      for (var item in res){
+        console.log(item)
+      }
+      this.prediction["event"]=res.Action;
+      console.log("PREDICTION: "+this.prediction["event"])
     })
-
-      console.log(this.prediction)
+      // console.log(this.prediction)
     return this.prediction;
+
     
     
     
