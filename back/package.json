@@ -12,6 +12,7 @@
     "angular-moment": "^1.0.1",
     "bodybuilder": "^2.2.0",
     "bson-ext": "^1.0.5",
+    "circular-json": "^0.5.5",
     "cors": "^2.8.4",
     "express": "^4.15.3",
     "moment": "^2.18.1",

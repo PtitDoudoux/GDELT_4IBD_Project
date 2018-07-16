@@ -10,6 +10,8 @@ var router = express.Router();
 
 var cors = require('cors');
 
+//var mongod = require('./models/mongod');
+
 
 
 var port_ecoute = 3000;
@@ -34,6 +36,8 @@ var mongo = require('./routes/api_mongo');
 
 app.use('/mongo', mongo);
 
+// Enrichissement de la base
+//mongod.processActors();
 
 //Ecoute du port 3000
 

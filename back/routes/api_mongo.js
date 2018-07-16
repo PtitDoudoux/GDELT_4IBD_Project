@@ -2,7 +2,7 @@ const express = require('express'),
       router = express.Router(),
       mongo = require('../models/mongod'),
       fetch = require('node-fetch');
-
+// const JSON = require('circular-json');
 
 router.get('/prediction/documents/count/:filter', function (req, res, next){
         var filter = parseString(req.params.filter);
@@ -32,8 +32,22 @@ router.get('/action/:code', function (req, res, next){
     });
 });
 
+router.get('/actors1/all', function (req, res, next){
+        mongo.getActors1()
+        .then(function (result) { 
+        res.json(result); 
+    });
+});
+
+router.get('/actors2/all', function (req, res, next){
+        mongo.getActors2()
+        .then(function (result) { 
+        res.json(result); 
+    });
+});
+
 router.get('/actors/all', function (req, res, next){
-        mongo.getActors()
+        mongo.getActorsCode()
         .then(function (result) { 
         res.json(result); 
     });

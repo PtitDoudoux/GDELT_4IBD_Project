@@ -1,3 +1,4 @@
+
 var MongoClient = require('mongodb').MongoClient, assert = require('assert');
 
    var hosts = 'localhost:27017'
@@ -6,14 +7,6 @@ var MongoClient = require('mongodb').MongoClient, assert = require('assert');
 function conn_url(){
   return 'mongodb://'+hosts+'/'+"data_201806";
 }
-
-//Nom de la base de données actuelle (data_YYYYMM)
-// function last_dbname(){
-//   var today = new Date();
-//   var mm = (today.getMonth()+1).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false});
-//   var year = today.getFullYear();
-//   return 'data_'+year+mm;
-// }
 
 //Fonction qui retourne la date du jour (utilisé pour nommer les collections)
 function tdy(){
@@ -73,41 +66,106 @@ function storeHistory(history){
 }
 exports.storeHistory = storeHistory;
 
-function getActors(){
+function splitActorsToArray(element){
+      var names =[]
+      element.forEach(item => {
+         CodeToName(item).then( res => { 
+          return res
+
+       }).then(res => {
+        console.log("RES "+res)
+         })
+           names.push(res)
+       })
+         
+         return names
+    }
+exports.splitActorsToArray = splitActorsToArray;
+
+function processActors(){
+
+  var collection_name = "history";
+  var names1 =[]
+  var names2 =[]
+   return connection()
+   .then(function(db){
+    col = db.collection(collection_name)
+    col.find().snapshot().forEach( function (el) {
+       splitActorsToArray(el["Actor1Codes"])
+       splitActorsToArray(el["Actor2Codes"])
+        
+        console.log(names1)
+        console.log(names2)
+       col.save(el);
+    })
+  
+})
+}
+exports.processActors = processActors;
+
+
+function CodeToName(code){
+
+var collection_name = "ref_actor";
+  return connection()
+  .then(function(db){
+    col = db.collection(collection_name)
+    return col.find({Code:code}, {Nom: 1}).toArray();
+    })
+  .then(res => { return res[0]["Nom"] } )
+}
+exports.CodeToName = CodeToName;
+
+function getActors1(){
+  var collection_name = "history";
+
+  return connection()
+  .then(function(db){
+     col = db.collection(collection_name)
+     return col.distinct( "Actor1Code" );
+   });
+}
+exports.getActors1 = getActors1;
+
+function getActors2(){
+  var collection_name = "history";
+ 
+  return connection() 
+  .then(function(db){
+     col = db.collection(collection_name)
+     return col.distinct( "Actor2Code" );
+   });
+}
+exports.getActors2 = getActors2;
+
+function getActorsCode(){
   var collection_name = "ref_actor";
 
   return connection()
   .then(function(db){
-     col = db.collection(collection_name);
-     return col.find({}).toArray()
+     col = db.collection(collection_name)
+     return col.find({}).toArray();
    });
 }
-exports.getActors = getActors;
+exports.getActorsCode = getActorsCode;
 
 function getAction(code){
-  var codep=parseInt(code);
-  var collection_name = "ref_code";
-
+  var collection_name = "ref_action";
   return connection()
   .then(function(db){
      col = db.collection(collection_name);
-     return col.find({"code":codep}).toArray()
+     return col.findOne({"Code":code})
    });
 }
 exports.getAction = getAction;
 
 function getHistory(actor1,actor2){
   var collection_name = "history";
-  d1=20180524
-  d2=20170224
-  d3=20160524
-  d4=20180524
-
   return connection()
   .then(function(db){
      col = db.collection(collection_name);
-     return col.findOne({$or:[{"Actor1Code":actor1, "Actor2Code":actor2, "SQLDATE":d1},{"Actor1Code":actor1, "Actor2Code":actor2, "SQLDATE":d2},{"Actor1Code":actor1, "Actor2Code":actor2, "SQLDATE":d3},{"Actor1Code":actor1, "Actor2Code":actor2, "SQLDATE":d4})
-   });
+     return col.findOne({"Actor1Code":actor1, "Actor2Code":actor2})
+   }).then(res => { return res })
 }
 exports.getHistory = getHistory;
 
