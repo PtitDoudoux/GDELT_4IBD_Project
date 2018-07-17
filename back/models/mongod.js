@@ -164,8 +164,8 @@ function getHistory(actor1,actor2){
   return connection()
   .then(function(db){
      col = db.collection(collection_name);
-     return col.findOne({"Actor1Code":actor1, "Actor2Code":actor2})
-   }).then(res => { return res })
+     return col.find({"Actor1Code":actor1, "Actor2Code":actor2}).toArray()
+   })
 }
 exports.getHistory = getHistory;
 
