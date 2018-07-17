@@ -17,13 +17,15 @@ import { MessageService }     from './_core/config/message.service';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
 import { PredictionFormComponent } from './Home/prediction-form/prediction-form.component';
+import { IsArrayPipe } from './Home/result/arrayify.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     ResultComponent,
-    PredictionFormComponent
+    PredictionFormComponent,
+    IsArrayPipe
   ],
   imports: [
     CommonModule,

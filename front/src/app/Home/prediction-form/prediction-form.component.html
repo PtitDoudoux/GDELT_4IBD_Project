@@ -1,8 +1,10 @@
 <div class="container">
 <div fxLayout="column" class="center_div" *ngIf="datas">
-	
-  <table class="example-full-width" cellspacing="10px"><tr>
-    <td><mat-form-field class="example-full-width" hideRequiredMarker>
+
+	<!-- style="width:270px !important; text-align: center" -->
+
+  <table cellspacing="10px"><tr>
+    <td><mat-form-field class="formField"  hideRequiredMarker>
       <input matInput placeholder="Actor 1" [matAutocomplete]="auto1" [formControl]="dataCtrlActors" class="form-control" id="actor" [(ngModel)]="model.actor1" name="actor1" required>
       <mat-autocomplete #auto1="matAutocomplete">
       <mat-option *ngFor="let item of filteredDatasActors | async" [value]="item.Code">
@@ -11,7 +13,7 @@
     </mat-autocomplete>
     </mat-form-field></td>
      <td>
-      <mat-form-field class="example-full-width" hideRequiredMarker>
+      <mat-form-field class="formField" hideRequiredMarker>
       <input matInput placeholder="Actor 2" [matAutocomplete]="auto3" [formControl]="dataCtrlActors2" class="form-control" id="actor2" [(ngModel)]="model.actor2" required>
       <mat-autocomplete #auto3="matAutocomplete">
       <mat-option *ngFor="let item of filteredDatasActors2 | async" [value]="item.Code">

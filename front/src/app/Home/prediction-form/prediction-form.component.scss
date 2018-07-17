@@ -3,7 +3,6 @@
   /deep/ .mat-input-placeholder {
     font-weight: 200;
   }
-
   /deep/ .mat-input-underline {
     background-color: #DDD;
 }
@@ -12,35 +11,30 @@
   }
 }
 
-div .form {
-  margin-top:10px;
-  min-width: 150px;
-  max-width: 500px;
-  width: 100%;
-  color:black;
-  font-size:200%;
-}
+// div .form {
+//   margin-top:10px;
+//   min-width: 150px;
+//   max-width: 500px;
+//   width: 200%;
+//   color:black;
+//   font-size:200%;
+// }
 
 table{
 	border-collapse: separate;
 	border-spacing: 10px;
 }
 
-.form-full-width {
-  width: 100%;
-}
-
 .center_div {
      margin : 0 auto;
 }
 
-.search_headers{
-  font-style: italic;
-  font-weight: 450;
-}
-
 #date {
   margin: 0 auto;
+}
+
+.formfield {
+  text-align: center;
 }
 
 .form-required { display: none; }

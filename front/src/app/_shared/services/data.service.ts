@@ -26,7 +26,7 @@ export interface Result {
 
 @Injectable()
 export class DataService {
-prediction={}
+
   private apiUrl="http://ec2-34-251-121-180.eu-west-1.compute.amazonaws.com:5000/predict";
   private apiUrl2 = "http://localhost:3000/mongo/prediction/history";
   private apiUrl3 = "http://localhost:3000/mongo/action";
@@ -39,7 +39,7 @@ prediction={}
   found:any;
   actors:any;
   names:any;
-  actorswn:any
+  prediction=[];
 
 
   private handleError: HandleError;
@@ -50,11 +50,25 @@ prediction={}
     this.handleError = httpErrorHandler.createHandleError('DataService');
   }
 
-  getHistory(prediction): Observable<any>{
-    return this._http.post(this.apiUrl2, prediction, httpOptions)
-    .pipe(
-      catchError(this.handleError<any[]>('history', []))
-    );
+  // getHistory(prediction): Observable<any>{
+  //   return this._http.post(this.apiUrl2, prediction, httpOptions)
+  //   .pipe(
+  //     catchError(this.handleError<any[]>('history', []))
+  //   );
+  // }
+
+  getHistory(prediction){
+    return new Promise((resolve, reject) => {
+      this._http.post(this.apiUrl2, prediction, httpOptions)
+        .subscribe(
+         data => {
+          resolve(data)
+        },
+         error => {
+          reject(error);
+        },
+);
+    });
   }
 
   getAction(code): Observable<any>{
@@ -110,23 +124,21 @@ prediction={}
 
   // getPrediction(prediction): Promise<any>{
      getPrediction(predict){
-     console.log(predict)
-     this.prediction = ({date:"20180715",event:"010"})
 
-    this.getAction(this.prediction["event"]).subscribe(res =>
-    {
-      console.log(res)
-      for (var item in res){
-        console.log(item)
-      }
-      this.prediction["event"]=res.Action;
-      console.log("PREDICTION: "+this.prediction["event"])
-    })
-      // console.log(this.prediction)
-    return this.prediction;
+     this.prediction= [{date:"20180715",event:"010"},{date:"20180715",event:"010"},{date:"20180715",event:"010"},{date:"20180715",event:"010"},{date:"20180715",event:"010"},{date:"20180715",event:"010"},{date:"20180715",event:"010"},{date:"20180715",event:"010"},{date:"20180715",event:"010"},{date:"20180715",event:"010"}]
+     
+     this.prediction.forEach(item => {
+        this.getAction(item.event).subscribe(res =>
+      {
+        console.log(res)
+        item["action"]=res.Action;
+      })
+     })
+     var obj = { actor1:predict.actor1, actor2:predict.actor2, prediction:this.prediction}
 
-    
-    
+     console.log("OBJJ: "+JSON.stringify(obj))
+
+     return obj;
     
     // return this._http.get(this.apiUrl, {
     //   params: {

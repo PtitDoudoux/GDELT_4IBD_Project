@@ -26,7 +26,7 @@ export class PredictionFormComponent implements OnInit {
 
   picker_date: any;
   data: Data[];
-  result ={}
+  obj ={}
 
 
   // dataCtrlTags: FormControl;
@@ -54,28 +54,24 @@ export class PredictionFormComponent implements OnInit {
     this.minDate = new Date();
     
    // console.log(this.datas)
-    this.dataCtrlActors = new FormControl();
-    this.filteredDatasActors  = this.dataCtrlActors.valueChanges
-    .pipe(
-      startWith(''),
-      map(data => data ? this.filterData(data, this.datas) : this.datas.slice())
-      );
+   this.dataCtrlActors = new FormControl();
+   this.filteredDatasActors  = this.dataCtrlActors.valueChanges
+   .pipe(
+    startWith(''),
+    map(data => data ? this.filterData(data, this.datas) : this.datas.slice())
+    );
 
-    this.dataCtrlActors2 = new FormControl();
-    this.filteredDatasActors2  = this.dataCtrlActors2.valueChanges
-    .pipe(
-      startWith(''),
-      map(data => data ? this.filterData(data, this.datas) : this.datas.slice())
-      );
+   this.dataCtrlActors2 = new FormControl();
+   this.filteredDatasActors2  = this.dataCtrlActors2.valueChanges
+   .pipe(
+    startWith(''),
+    map(data => data ? this.filterData(data, this.datas) : this.datas.slice())
+    );
+ }
 
-    console.log(this.datas)
-    console.log(this.datas1)
-    console.log(this.datas2)
-   }
-
-   search(){
-  	this.submitted = true;
-    if(this.picker_date){
+ search(){
+   this.submitted = true;
+   if(this.picker_date){
      this.model.date=this.formatDate(this.picker_date);
 
      if(typeof(this.model)!='undefined'){
@@ -84,56 +80,90 @@ export class PredictionFormComponent implements OnInit {
       var actor2 = this.model.actor2
       var tmp1 = this.datas.find(function(element) {
         if(element.Code == actor1)
-        return element.Nom;
+          return element.Nom;
       });
       var tmp2 = this.datas.find(function(element) {
         if(element.Code == actor2)
-        return element.Nom;
+          return element.Nom;
       });
 
       var toSend = {"actor1":tmp1.Nom,"actor2":tmp2.Nom, "date":this.model.date}
+      var tmp = []
 
-      console.log(toSend) 
-
-      this.result = {"formData":toSend,
-                    "predicted":this.dataService.getPrediction(this.model),
-                    "history":{}}
-
-     
-      this.dataService.getHistory(this.model).subscribe(res =>
-      {
-        console.log("RESULT: "+res)
-        res ? this.result["history"] = res :  this.messageEvent.emit(this.result)
-        if(res!=null)
-        this.dataService.getAction(this.result["history"]["EventCode"]).subscribe(res =>{
-            this.result["history"]["EventCode"]=res["Action"];
-        this.messageEvent.emit(this.result);
-        });
-     });
+      this.obj = {
+        formData:toSend,
+        predicted:this.dataService.getPrediction(this.model),
+        history:[]
       }
-     
+
+    this.dataService.getHistory(this.model).then(res =>
+    {
+      console.log(JSON.stringify(res))
+      if(this.isEmpty(res))
+        this.messageEvent.emit(this.obj)
+      else {
+         res[0].forEach(item => {
+          this.dataService.getAction(item["EventCode"]).subscribe(res =>{
+             item["Action"]=res["Action"]
+        })
+           this.obj["history"].push(item)
+       })
+          if(!this.isEmpty(this.obj["history"])){
+    this.obj['history'].forEach(item =>{
+      item['date_name']=this.formatDateString(item.SQLDATE.toString())
+    })
     }
+    else 
+      this.res['history']=[]
+
+     if(!this.isEmpty(this.obj["predicted"])){
+    this.obj['predicted']['prediction'].forEach(item =>{
+      item['date_name']=this.formatDateString(item.date.toString())
+    })
+    }
+console.log("OBJET :"this.obj)
+          this.messageEvent.emit(this.obj);
+     }
+
+      });
+  }
+
 }
-  
+}
 
-  saveDate(event: MatDatepickerInputEvent<Date>) {
-    this.picker_date = new Date(event.value);
+
+  formatDateString(date)
+  {
+    var a = moment(date, "YYYYMMDD");
+      a.format("MMM Do YYYY");
+      return a["_d"].toString().substr(0, 11)
   }
-
-
-  reset_search(){
-    this.model = new Data(null,null,null);
-
+isEmpty(obj) {
+  for(var key in obj) {
+    if(obj.hasOwnProperty(key))
+      return false;
   }
+  return true;
+}
 
-  formatDate(date){
-    return ""+date.getFullYear()+(date.getMonth()+1).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})+date.getDate().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
-  }
+saveDate(event: MatDatepickerInputEvent<Date>) {
+  this.picker_date = new Date(event.value);
+}
+
+
+reset_search(){
+  this.model = new Data(null,null,null);
+
+}
+
+formatDate(date){
+  return ""+date.getFullYear()+(date.getMonth()+1).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})+date.getDate().toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
+}
 
 
 
-  filterData(name: string, datas: any) {
-    return datas.filter(data =>
-      data.Nom.toLowerCase().indexOf(name.toLowerCase()) === 0);
-  }
+filterData(name: string, datas: any) {
+  return datas.filter(data =>
+    data.Nom.toLowerCase().indexOf(name.toLowerCase()) === 0);
+}
 }
