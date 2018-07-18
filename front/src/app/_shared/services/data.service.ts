@@ -50,13 +50,6 @@ export class DataService {
     this.handleError = httpErrorHandler.createHandleError('DataService');
   }
 
-  // getHistory(prediction): Observable<any>{
-  //   return this._http.post(this.apiUrl2, prediction, httpOptions)
-  //   .pipe(
-  //     catchError(this.handleError<any[]>('history', []))
-  //   );
-  // }
-
   getHistory(prediction){
     return new Promise((resolve, reject) => {
       this._http.post(this.apiUrl2, prediction, httpOptions)
@@ -125,18 +118,18 @@ export class DataService {
   // getPrediction(prediction): Promise<any>{
      getPrediction(predict){
 
-     this.prediction= [{date:"20180715",event:"010"},{date:"20180715",event:"010"},{date:"20180715",event:"010"},{date:"20180715",event:"010"},{date:"20180715",event:"010"},{date:"20180715",event:"010"},{date:"20180715",event:"010"},{date:"20180715",event:"010"},{date:"20180715",event:"010"},{date:"20180715",event:"010"}]
+     this.prediction= []
      
      this.prediction.forEach(item => {
         this.getAction(item.event).subscribe(res =>
       {
-        console.log(res)
+        
         item["action"]=res.Action;
       })
      })
      var obj = { actor1:predict.actor1, actor2:predict.actor2, prediction:this.prediction}
 
-     console.log("OBJJ: "+JSON.stringify(obj))
+     
 
      return obj;
     
@@ -150,9 +143,9 @@ export class DataService {
     // })
     // .toPromise()
     // .then(response => {
-    //   console.log(response);
+    //   
     // })
-    // .catch(console.log);
+    // .catch(
   }
 
 

@@ -50,10 +50,11 @@ export class PredictionFormComponent implements OnInit {
 
 
   ngOnInit() {
+    this.submitted = false;
     this.startDate = new Date();
     this.minDate = new Date();
     
-   // console.log(this.datas)
+   // 
    this.dataCtrlActors = new FormControl();
    this.filteredDatasActors  = this.dataCtrlActors.valueChanges
    .pipe(
@@ -75,7 +76,7 @@ export class PredictionFormComponent implements OnInit {
      this.model.date=this.formatDate(this.picker_date);
 
      if(typeof(this.model)!='undefined'){
-      console.log(this.model)
+      
       var actor1 = this.model.actor1
       var actor2 = this.model.actor2
       var tmp1 = this.datas.find(function(element) {
@@ -98,30 +99,18 @@ export class PredictionFormComponent implements OnInit {
 
     this.dataService.getHistory(this.model).then(res =>
     {
-      console.log(JSON.stringify(res))
+      
       if(this.isEmpty(res))
         this.messageEvent.emit(this.obj)
       else {
-         res[0].forEach(item => {
+        
+         res.forEach(item => {
           this.dataService.getAction(item["EventCode"]).subscribe(res =>{
              item["Action"]=res["Action"]
         })
            this.obj["history"].push(item)
        })
-          if(!this.isEmpty(this.obj["history"])){
-    this.obj['history'].forEach(item =>{
-      item['date_name']=this.formatDateString(item.SQLDATE.toString())
-    })
-    }
-    else 
-      this.res['history']=[]
-
-     if(!this.isEmpty(this.obj["predicted"])){
-    this.obj['predicted']['prediction'].forEach(item =>{
-      item['date_name']=this.formatDateString(item.date.toString())
-    })
-    }
-console.log("OBJET :"this.obj)
+          
           this.messageEvent.emit(this.obj);
      }
 
@@ -132,12 +121,7 @@ console.log("OBJET :"this.obj)
 }
 
 
-  formatDateString(date)
-  {
-    var a = moment(date, "YYYYMMDD");
-      a.format("MMM Do YYYY");
-      return a["_d"].toString().substr(0, 11)
-  }
+
 isEmpty(obj) {
   for(var key in obj) {
     if(obj.hasOwnProperty(key))

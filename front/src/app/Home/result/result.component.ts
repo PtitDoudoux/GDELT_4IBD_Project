@@ -15,6 +15,10 @@ export class ResultComponent implements OnInit{
 	res ={};
 	objectKeys = Object.keys;
 	history =[];
+	noHistory=false;
+	noPrediction=false;
+
+	dateName=""
 
 	constructor(private router: Router) {
 		
@@ -22,24 +26,38 @@ export class ResultComponent implements OnInit{
 		
 
 	ngOnInit(){
-console.log("REES : "+this.result)
-		this.res = this.result;
-		
-		// if(!this.isEmpty(this.res["history"])){
-  //   this.res['history'].forEach(item =>{
-  //     item['date_name']=this.formatDateString(item.SQLDATE.toString())
-  //   })
-  //   }
-  //   else 
-  //     this.res['history']=[]
 
-  //    if(!this.isEmpty(this.res["predicted"])){
-  //   this.res['predicted']['prediction'].forEach(item =>{
-  //     item['date_name']=this.formatDateString(item.date.toString())
-  //   })
-  //   }
+		console.log("RESULT: "+JSON.stringify(this.result))
+		 this.noHistory=false
+	 this.noPrediction=false
 
+ 	this.dateName=this.formatDateString(this.result.formData.date)
+		if(!this.isEmpty(this.result["history"])){
+    this.result['history'].forEach(item =>{
+      item['date_name']=this.formatDateString(item.SQLDATE.toString())
+    })
+    }
+    else {
+      this.result['history']=[{}];
+      this.noHistory=true;
+	}
+
+     if(!this.isEmpty(this.result["predicted"]['prediction'])){
+   this.result['predicted']['prediction'].forEach(item =>{
+      item['date_name']=this.formatDateString(item.date.toString())
+    })
+    }
+     else {
+     	this.result['predicted']['prediction']=[{}];
+     	 this.noPrediction=true;
+     }
+
+
+
+     this.res = this.result;  
+console.log("RESULT: "+JSON.stringify(this.res))
 }
+
   formatDateString(date)
   {
     var a = moment(date, "YYYYMMDD");
