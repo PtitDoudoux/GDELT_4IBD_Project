@@ -127,8 +127,6 @@ getPrediction(predict){
     })
     .toPromise()
     .then(response => {
-      console.log("RESP :"+response)
-      console.log("RESP :"+response.body)
       return response;
     })
     .catch( err => console.log(err));
